@@ -1,4 +1,4 @@
-import re
+from re import search
 
 
 def get_log_data_by_id(log_id):
@@ -40,8 +40,8 @@ def get_credentials_by_ip(ip):
 
     for index, line in enumerate(logs):
         if f"IP:{ip}" in line:
-            login = re.search("(Login:)(.*)(?=,)", line)
-            password = re.search("(Password:)(.*)", line)
+            login = search("(Login:)(.*)(?=,)", line)
+            password = search("(Password:)(.*)", line)
             return f"{login.group()}, {password.group()}"
 
     raise Exception(f"Log with IP {ip} was not found.")
