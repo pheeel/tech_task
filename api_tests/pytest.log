@@ -1,0 +1,17 @@
+============================= test session starts ==============================
+platform linux -- Python 3.6.8, pytest-5.1.1, py-1.8.0, pluggy-0.12.0
+rootdir: /home/pheel/PycharmProjects/tech_task/api_tests, inifile: pytest.ini
+collected 10 items
+
+tests/delete_resource_test.py::TestDeleteResource::test_delete_resource PASSED [ 10%]
+tests/delete_resource_test.py::TestDeleteResource::test_delete_resource_async PASSED [ 20%]
+tests/delete_resource_test.py::TestDeleteResourceWithInvalidPath::test_resource_deletion_with_invalid_path PASSED [ 30%]
+tests/get_meta_info_test.py::TestGetMetaInfo::test_get_of_meta_info PASSED [ 40%]
+tests/get_meta_info_test.py::TestGetMetaInfo::test_get_of_meta_info_with_invalid_path PASSED [ 50%]
+tests/post_upload_test.py::TestUploadFileByURL::test_upload_file PASSED  [ 60%]
+tests/post_upload_test.py::TestUploadFileByURL::test_upload_file_with_invalid_params PASSED [ 70%]
+tests/post_upload_test.py::TestUploadFileByURL::test_upload_file_with_invalid_headers PASSED [ 80%]
+tests/put_resource_publish_test.py::TestResourcePublish::test_resource_publish PASSED [ 90%]
+tests/put_resource_publish_test.py::TestResourcePublish::test_resource_publish_with_invalid_path PASSED [100%]
+
+============================= 10 passed in 11.90s ==============================
