@@ -1,0 +1,9 @@
+{
+  "private": true,
+  "scripts": {
+    "test": "yarn jest"
+  },
+  "dependencies": {
+    "jest": "^24.8.0"
+  }
+}
