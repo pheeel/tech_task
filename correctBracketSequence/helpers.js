@@ -2,27 +2,7 @@ const brackets = require('./constants');
 
 module.exports = {
     /**
-     * Checks that two received sequences are located side by side in the original sequence.
-     *
-     * @param {String} firstSeq - first sequence.
-     * @param {String} secondSeq - second sequence.
-     * @param {String} originalSeq - original sequence.
-     * @returns {boolean} - True if received sequences are located side by side, False otherwise.
-     */
-    isSequencesIsNear (firstSeq, secondSeq, originalSeq) {
-        const preRegex = firstSeq.concat(secondSeq).split('');
-
-        const regex = preRegex.reduce((acc, val) => {
-            acc.push('\\');
-            acc.push(val);
-            return acc;
-        }, []).join('');
-
-        return !!originalSeq.match(regex);
-    },
-
-    /**
-     * Checks that type received brackets are the same.
+     * Checks if type of received brackets are the same.
      *
      * @param {String} openBracket - Open bracket.
      * @param {String} closedBracket - Closed bracket.
@@ -30,7 +10,7 @@ module.exports = {
      * @example '{' '}' => True, '[' '}' => False, '(' '(' => False.
      */
     isTypeTheSame (openBracket, closedBracket) {
-        return brackets.types[openBracket] === brackets.types[closedBracket];
+        return brackets.types[openBracket] === closedBracket || brackets.types[closedBracket] === openBracket;
     },
 
     /**
@@ -38,11 +18,40 @@ module.exports = {
      * @param {Array} array - Array with strings.
      * @returns {String} - The longest string from an array.
      */
-    getLongestString(array) {
+    getLongestString (array) {
         if (!array[0]) return false;
         let max = array[0].length;
         array.map(v => max = Math.max(max, v.length));
         result = array.filter(v => v.length === max);
         return result.pop();
+    },
+
+    /**
+     * Returns indexes of given array of stack items.
+     *
+     * @param {Array} stack - Array of stack items.
+     * @returns {Array} - Array of indexes.
+     */
+    getIndexOfStackItem (stack) {
+        const result = [];
+        for (let i of stack) {
+            result.push(i[1]);
+        }
+        return result;
+    },
+
+    /**
+     * Splits the string by indexes. Characters at the indexes are removed.
+     *
+     * @param {String} string - The original string.
+     * @param {Array} indexes - Array with indexes which need to delete from original string.
+     * @returns {Array} - Array of strings.
+     */
+    splitStringByIndexes (string, indexes) {
+        let splits = string;
+        for (let i = 0; i < indexes.length; i++) {
+            splits = splits.substring(0, indexes[i]) + '|' + splits.substring(indexes[i]+1);
+        }
+        return  splits.split('|').filter(el => el !== '');
     },
 };

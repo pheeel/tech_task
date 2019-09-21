@@ -1,49 +1,32 @@
-const {isSequencesIsNear, isTypeTheSame, getLongestString} = require('./helpers');
+const {isTypeTheSame, getIndexOfStackItem, getLongestString, splitStringByIndexes} = require('./helpers');
 const brackets = require('./constants');
 
+/**
+ * Checks if the given string contains the substrings of the correct sequence
+ * of opening and closing square, round and curly brackets.
+ *
+ * @param {String} sequence - String of bracket sequence.
+ * @returns {Boolean|String} - False if no parenthesis sequences are found,
+ *          otherwise the longest parentheses sequence are returned.
+ */
 const getCorrectBracketSequence = sequence => {
-    // Base cases
-    if (typeof sequence !== 'string' || !sequence) return false;
-    
+    if (typeof sequence !== "string") return false;
     const bracketList = sequence.split('');
-    const matches = [];
-    let stack = [];
-    let match = '';
+    const dividingIndexes = [];
+    const stack = [];
 
-    for (const bracket of bracketList) {
-        if (stack.length === 0 && match) {
-            matches.push(match);
-            match = '';
-        }
-
+    for (const [index, bracket] of bracketList.entries()) {
         if (brackets.open.includes(bracket)) {
-            stack.push(bracket);
-        }
-
-        if (brackets.closed.includes(bracket) && stack.length !== 0) {
-            const lastOpenBracket = stack.pop();
-            if (isTypeTheSame(lastOpenBracket, bracket)) {
-                match = `${lastOpenBracket}${match}${bracket}`;
-            } else {
-                if (match) {
-                    if (matches !== [] && isSequencesIsNear(matches[matches.length-1], matches, sequence)) {
-                        const newSec = matches[col.length-1].join(matches);
-                        matches.push(newSec);
-                    }
-                    matches.push(match);
-                }
-                stack = [];
-                match = '';
-            }
+            stack.push([bracket, index]);
+        } else if (brackets.closed.includes(bracket) && !(stack.length === 0) && isTypeTheSame(stack[stack.length -1][0], bracket)) {
+            stack.pop();
+        } else {
+            dividingIndexes.push(...getIndexOfStackItem(stack), index);
         }
     }
 
-    if (match) matches.push(match);
-    const result = getLongestString(matches);
-    if (!result) return false;
-    return result;
+    const allCombinations =  splitStringByIndexes(sequence, [...dividingIndexes, ...getIndexOfStackItem(stack)]);
+    return getLongestString(allCombinations);
 };
 
-console.log(getCorrectBracketSequence('[{}()]{}'));
-
-module.exports.getCorrectBracketSequence = getCorrectBracketSequence;
+module.exports = {getCorrectBracketSequence};
