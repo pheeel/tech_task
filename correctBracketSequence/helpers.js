@@ -20,10 +20,7 @@ module.exports = {
      */
     getLongestString (array) {
         if (!array[0]) return false;
-        let max = array[0].length;
-        array.map(v => max = Math.max(max, v.length));
-        result = array.filter(v => v.length === max);
-        return result.pop();
+        return array.reduce((a, b) => a.length > b.length ? a : b, '');
     },
 
     /**
