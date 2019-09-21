@@ -50,8 +50,8 @@ module.exports = {
     splitStringByIndexes (string, indexes) {
         let splits = string;
         for (let i = 0; i < indexes.length; i++) {
-            splits = splits.substring(0, indexes[i]) + '|' + splits.substring(indexes[i]+1);
+            splits = splits.substring(0, indexes[i]) + ' ' + splits.substring(indexes[i]+1);
         }
-        return  splits.split('|').filter(el => el !== '');
+        return  splits.split(' ').filter(el => el !== '');
     },
 };

@@ -16,16 +16,14 @@ const getCorrectBracketSequence = sequence => {
     const stack = [];
 
     for (const [index, bracket] of bracketList.entries()) {
-        if (brackets.open.includes(bracket)) {
-            stack.push([bracket, index]);
-        } else if (brackets.closed.includes(bracket) && !(stack.length === 0) && isTypeTheSame(stack[stack.length -1][0], bracket)) {
+        if (brackets.open.includes(bracket)) stack.push([bracket, index]);
+        else if (brackets.closed.includes(bracket) && !(stack.length === 0) && isTypeTheSame(stack[stack.length -1][0], bracket)) {
             stack.pop();
-        } else {
-            dividingIndexes.push(...getIndexOfStackItem(stack), index);
-        }
+        } else dividingIndexes.push(...getIndexOfStackItem(stack), index);
     }
 
-    const allCombinations =  splitStringByIndexes(sequence, [...dividingIndexes, ...getIndexOfStackItem(stack)]);
+    const invalidCharsIndexes = [...dividingIndexes, ...getIndexOfStackItem(stack)];
+    const allCombinations =  splitStringByIndexes(sequence, invalidCharsIndexes);
     return getLongestString(allCombinations);
 };
 
