@@ -17,7 +17,10 @@ const getCorrectBracketSequence = sequence => {
 
     for (const [index, bracket] of bracketList.entries()) {
         if (brackets.open.includes(bracket)) stack.push([bracket, index]);
-        else if (brackets.closed.includes(bracket) && !(stack.length === 0) && isTypeTheSame(stack[stack.length -1][0], bracket)) {
+        else if (
+            brackets.closed.includes(bracket) &&
+            !(stack.length === 0) &&
+            isTypeTheSame(stack[stack.length -1][0], bracket)) {
             stack.pop();
         } else dividingIndexes.push(...getIndexOfStackItem(stack), index);
     }
