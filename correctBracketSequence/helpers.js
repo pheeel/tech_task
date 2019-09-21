@@ -39,7 +39,8 @@ module.exports = {
      * @returns {String} - The longest string from an array.
      */
     getLongestString(array) {
-        var max = array[0].length;
+        if (!array[0]) return false;
+        let max = array[0].length;
         array.map(v => max = Math.max(max, v.length));
         result = array.filter(v => v.length === max);
         return result.pop();

@@ -1,4 +1,4 @@
-const helpers = require('./helpers');
+const {isSequencesIsNear, isTypeTheSame, getLongestString} = require('./helpers');
 const brackets = require('./constants');
 
 const getCorrectBracketSequence = sequence => {
@@ -9,10 +9,8 @@ const getCorrectBracketSequence = sequence => {
     const matches = [];
     let stack = [];
     let match = '';
-    let index = 0;
 
     for (const bracket of bracketList) {
-        index += index;
         if (stack.length === 0 && match) {
             matches.push(match);
             match = '';
@@ -24,11 +22,11 @@ const getCorrectBracketSequence = sequence => {
 
         if (brackets.closed.includes(bracket) && stack.length !== 0) {
             const lastOpenBracket = stack.pop();
-            if (helpers.isTypeTheSame(lastOpenBracket, bracket)) {
+            if (isTypeTheSame(lastOpenBracket, bracket)) {
                 match = `${lastOpenBracket}${match}${bracket}`;
             } else {
                 if (match) {
-                    if (matches !== [] && helpers.isSequencesIsNear(matches[matches.length-1], matches, sequence)) {
+                    if (matches !== [] && isSequencesIsNear(matches[matches.length-1], matches, sequence)) {
                         const newSec = matches[col.length-1].join(matches);
                         matches.push(newSec);
                     }
@@ -41,9 +39,11 @@ const getCorrectBracketSequence = sequence => {
     }
 
     if (match) matches.push(match);
-    const result = helpers.getLongestString(matches);
+    const result = getLongestString(matches);
     if (!result) return false;
     return result;
 };
+
+console.log(getCorrectBracketSequence('[{}()]{}'));
 
 module.exports.getCorrectBracketSequence = getCorrectBracketSequence;
